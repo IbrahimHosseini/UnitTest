@@ -7,29 +7,31 @@
 
 import XCTest
 
+@testable import UnitTestSample
+
 class UnitTestSampleTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+  var sut: BullsEyeGame!
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+    sut = BullsEyeGame()
+  }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+  override func tearDownWithError() throws {
+    sut = nil
+    try super.tearDownWithError()
+  }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+  func testScoreIsComputedWhenGuessIsHigherThanTarget() {
+    // given: Here, you set up any values needed
+    let guess = sut.targetValue - 5 // 50 + 5
+
+    // when: In this section, you’ll execute the code being tested
+    sut.check(guess: guess)
+
+    // then: This is the section where you’ll assert the result you expect with a message that prints if the test fails
+    XCTAssertEqual(sut.scoreRound, 105, "Score computed from guess is wrong")
+  }
 
 }
